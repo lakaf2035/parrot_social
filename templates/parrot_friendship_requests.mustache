@@ -1,0 +1,30 @@
+<div class="ajax">
+    <h1>
+        <a href="/local/parrot_social/pages/parrot_profile.php?parrot_id={{parrot.parrot_id}}">
+            <b>
+                {{parrot.name}}
+            </b>
+        </a>
+        {{#str}} friendship_requests, local_parrot_social {{/str}}
+    </h1>
+    <div class="d-flex">
+        <div class="w-50">
+            <h3 class="d-flex align-items-center mb-3">
+                {{#str}} requests_received, local_parrot_social {{/str}}
+            </h3>
+            <div id="received_invitations">
+                <ul class="list-group">
+                    {{#received_invitations}}
+                    {{> local_parrot_social/components/received_invitation }}
+                    {{/received_invitations}}
+                </ul>
+
+                {{^received_invitations}}
+                <b class="">
+                    {{#str}} no_invitations, local_parrot_social {{/str}}
+                </b>
+                {{/received_invitations}}
+            </div>
+        </div>
+    </div>
+</div>

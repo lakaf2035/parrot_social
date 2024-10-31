@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/parrot_social/db" VERSION="20230110" COMMENT="XMLDB file for Moodle local/parrot_social" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
+  <TABLES>
+    <TABLE NAME="local_parrot_social" COMMENT="Default comment for local_parrot_social, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="parrot_social_parrots" COMMENT="Default comment for the table, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+        <FIELD NAME="parrot_id" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+        <FIELD NAME="picture_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" />
+        <FIELD NAME="custom_attribute" TYPE="text" NOTNULL="false" SEQUENCE="false" />
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="parrot_id_index" UNIQUE="true" FIELDS="parrot_id" />
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="parrot_social_posts" COMMENT="Default comment for the table, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+        <FIELD NAME="parrot_id" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+        <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+        <FIELD NAME="text" TYPE="text" NOTNULL="false" SEQUENCE="false" />
+        <FIELD NAME="created_at" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+        <!-- <KEY NAME="post_parrot_key" TYPE="foreign" FIELDS="parrot_id" REFTABLE="mdl_user_info_field" REFFIELDS="shortname" /> -->
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="parrot_social_likes" COMMENT="Default comment for the table, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+        <FIELD NAME="parrot_id" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+        <FIELD NAME="post_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+        <FIELD NAME="created_at" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+        <KEY NAME="like_post_key" TYPE="foreign" FIELDS="post_id" REFTABLE="mdl_parrot_social_posts" REFFIELDS="id" />
+        <!-- <KEY NAME="like_parrot_key" TYPE="foreign" FIELDS="parrot_id" REFTABLE="mdl_user_info_field" REFFIELDS="shortname" /> -->
+      </KEYS>
+    </TABLE>
+
+
+    <TABLE NAME="parrot_social_friends" COMMENT="Default comment for the table, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+        <FIELD NAME="parrot1_id" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+        <FIELD NAME="parrot2_id" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+        <FIELD NAME="created_at" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+        <KEY NAME="friend_parrot1_key" TYPE="foreign" FIELDS="parrot1_id" REFTABLE="parrot_social_parrots" REFFIELDS="parrot_id" />
+        <KEY NAME="friend_parrot2_key" TYPE="foreign" FIELDS="parrot2_id" REFTABLE="parrot_social_parrots" REFFIELDS="parrot_id" />
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="parrot_social_invitations" COMMENT="Default comment for the table, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+        <FIELD NAME="recipient_parrot_id" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+        <FIELD NAME="sending_parrot_id" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+        <FIELD NAME="status" TYPE="char" LENGTH="255" SEQUENCE="false" DEFAULT="pending" />
+        <FIELD NAME="created_at" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+        <KEY NAME="invitation_recipient_parrot_key" TYPE="foreign" FIELDS="recipient_parrot_id" REFTABLE="parrot_social_parrots" REFFIELDS="parrot_id" />
+        <KEY NAME="friend_sending_parrot_key" TYPE="foreign" FIELDS="sending_parrot_id" REFTABLE="parrot_social_parrots" REFFIELDS="parrot_id" />
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="local_parrots_images" COMMENT="Table for storing images uploaded by pluginname">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" AUTO_INCREMENT="true" COMMENT="Unique ID for the image" />
+        <!-- <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" COMMENT="Title of the image"/> -->
+        <FIELD NAME="parrot_id" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+        <FIELD NAME="filename" TYPE="char" LENGTH="255" NOTNULL="true" COMMENT="Filename of the image on the server" />
+        <!-- <FIELD NAME="filesize" TYPE="bigint" LENGTH="20" NOTNULL="true" UNSIGNED="true" COMMENT="Size of the image in bytes"/> -->
+        <!-- <FIELD NAME="filetype" TYPE="char" LENGTH="255" NOTNULL="true" COMMENT="MIME type of the image"/> -->
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" COMMENT="Timestamp of when the image was uploaded" />
+        <!-- <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" COMMENT="Timestamp of when the image was last modified"/> -->
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

@@ -1,0 +1,44 @@
+<div class="media" id="media-accordion">
+    <div class="card mb-3 w-100" data-parent="#media-accordion">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h3 class="mr-auto">
+                {{#str}} media, local_parrot_social {{/str}}
+            </h3>
+            {{^media_page}}
+            <a href="{{media_page_url}}" id="seeMoreMediaBtn">
+                <button class="btn btn-link collapse show media-updatable">
+                    {{#str}} click_to_see_more, local_parrot_social {{/str}}
+                </button>
+            </a>
+            {{/media_page}}
+            {{#media_page}}
+            <span id="mediaPage"></span>
+            {{/media_page}}
+            {{< local_parrot_social/components/gear }}
+            {{$id}}media{{/id}}
+            {{$items}}
+            <button class="dropdown-item collapse show media-updatable" data-parent="#media-accordion"
+                data-toggle="collapse" data-target=".media-updatable" aria-expanded="true">
+                {{#str}} edit_media, local_parrot_social {{/str}}
+            </button>
+            <button class="dropdown-item collapse media-updatable" data-parent="#media-accordion" data-toggle="collapse"
+                data-target=".media-updatable" aria-expanded="true">
+                {{#str}} cancel_edit_media, local_parrot_social {{/str}}
+            </button>
+            {{/items}}
+            {{/ local_parrot_social/components/gear }}
+        </div>
+        <div class="card-body p-1 collapse show media-updatable {{^images}} d-none {{/images}} position-relative"
+            data-parent="#media-accordion">
+            <div id="blocker" class="position-absolute" style="top: 0; bottom:0; left: 0; right: 0;"></div>
+            {{#images}}
+            <a class="d-inline-block mx-1" data-toggle="lightbox" data-gallery="gallery" href="{{url}}">
+                <img class="p-1 mediaElements" width="100" height="100" src="{{url}}">
+            </a>
+            {{/images}}
+        </div>
+        <div class="card-body collapse media-updatable" data-parent="#media-accordion">
+            {{{image_Upload_form_html}}}
+        </div>
+    </div>
+</div>

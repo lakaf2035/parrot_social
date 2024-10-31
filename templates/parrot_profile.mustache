@@ -1,0 +1,145 @@
+{{> local_parrot_social/components/loader }}
+
+<div class="container-fluid pb-5 px-0 ajax">
+    <div class="row justify-content-md-between" id="collapse">
+        <div class="col-sm-12 order-1 order-md-2 col-md-7 pl-md-5  pr-0 parrot_profile ml-auto">
+            <div class="w-100 d-flex justify-content-center justify-content-md-end">
+                <div class="gear order-2">
+                    {{< local_parrot_social/components/gear }}
+                    {{$id}}parrot-{{parrot.parrot_id}}{{/id}}
+                    {{$items}}
+                    <button class="dropdown-item collapse show update" data-parent="#collapse" data-toggle="collapse"
+                        data-target=".update" aria-expanded="true">
+                        {{#str}} edit_parrot, local_parrot_social {{/str}}
+                    </button>
+                    <button class="dropdown-item collapse update" data-parent="#collapse" data-toggle="collapse"
+                        data-target=".update" aria-expanded="true">
+                        {{#str}} edit_parrot_cancel, local_parrot_social {{/str}}
+                    </button>
+                    {{/items}}
+                    {{/ local_parrot_social/components/gear }}
+                </div>
+                <div class="collapse order-1 show update w-100" data-parent="#collapse">
+                    <div class="d-flex w-100 align-items-center flex-column flex-md-row">
+                        <div class="w-auto">
+                            {{< local_parrot_social/components/profile_photo }}
+                            {{$max_width}} 10rem {{/max_width}}
+                            {{$alt}}{{parrot.name}}{{/alt}}
+                            {{/ local_parrot_social/components/profile_photo }}
+                            <h2 class="profile-name text-center text-md-center font-weight-semibold pt-2 pl-md-1">
+                                {{parrot.name}}
+                            </h2>
+                        </div>
+                        <div class="profile-description text-center text-md-left pl-md-3 pb-md-5">
+                            {{{parrot.description}}}
+                        </div>
+                    </div>
+                    {{#is_owner}}
+                    {{#invitations_count}}
+                    <div class="d-flex justify-content-center justify-content-md-start py-2">
+                        <a href="{{invitations_url}}" class="invitation-link btn btn-primary">
+                            {{invitations_count}} {{#str}} friendship_requests, local_parrot_social {{/str}}
+                        </a>
+                    </div>
+                    {{/invitations_count}}
+                    {{/is_owner}}
+                    {{#parrot.invitable}}
+                    <div class="dropdown my-3">
+                        <button class="btn btn-primary" type="button" id="inviting_parrot_select" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            {{#str}} send_friendship_requests, local_parrot_social {{/str}}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="inviting_parrot_select">
+                            {{#parrot.viewer_parrots}}
+                            <div class="d-none">
+                                {{{form_html}}}
+                            </div>
+                            <button class="dropdown-item" type="button"
+                                onclick="handle_submission(event.currentTarget.previousElementSibling.children[0]); $(window.loader).show();">
+                                {{name}}
+                            </button>
+                            {{/parrot.viewer_parrots}}
+                        </div>
+                    </div>
+                    {{/parrot.invitable}}
+                </div>
+                <div class="collapse update" data-parent="#collapse">
+                    {{{parrot_update_form_html}}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col-sm-12 order-2 order-md-1 col-md-5 py-3 py-md-0">
+            {{#is_owner}}
+            <div class="new-post py-3 py-md-3">
+                <button type="button" class="btn btn-primary py-2 px-3" data-toggle="collapse" href="#collapseExample"
+                    role="button" aria-expanded="false" aria-controls="collapseExample" style="height: fit-content;">
+                    {{#str}} new_post, local_parrot_social {{/str}}
+                </button>
+                <div class="collapse my-3" id="collapseExample">
+                    <div class="card card-body">
+                        {{{post_form_html}}}
+                    </div>
+                </div>
+            </div>
+            {{/is_owner}}
+            <h3 class="d-flex align-items-center mb-3">
+                {{#str}} posts, local_parrot_social {{/str}}
+            </h3>
+            <div id="posts">
+                <div class="bg-gradient-light">
+                    {{#post}}
+                    {{> local_parrot_social/components/post }}
+                    {{/post}}
+                </div>
+
+                {{#posts}}
+                {{^exists}}
+                {{> local_parrot_social/components/post }}
+                {{/exists}}
+                {{/posts}}
+                {{^posts}}
+                <b class="">
+                    {{#str}} no_post, local_parrot_social {{/str}}
+                </b>
+                {{/posts}}
+            </div>
+        </div>
+        <div class="col-sm-12 order-1 order-md-2 col-md-7 pl-md-5">
+            <div class="py-3 w-100">
+                <div class="card mb-3 w-100">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h3 class="mr-auto">
+                            {{#str}} owner, local_parrot_social {{/str}}
+                        </h3>
+                    </div>
+                    <div class="card-body p-1 media-updatable position-relative">
+                        <div class="profile-picture" style="width: fit-content;">
+                            {{^owner.picture}}
+                            <img src="https://secure.gravatar.com/avatar/0c57f1e60c80b854656b970af69817fa?s=100&amp;d=mm"
+                                class="userpicture defaultuserpic border mx-auto" width="75" height="75"
+                                alt="Picture of {{ owner.name }}" title="Picture of {{ owner.name }}">
+                            {{/owner.picture}}
+
+                            {{#owner.picture}}
+                            {{{ owner.picture_url }}}
+                            {{/owner.picture}}
+
+                            <h6 class="text-center mx-auto mt-1"
+                                style="width: min-content; overflow-wrap: normal; word-break: normal;">
+                                {{ owner.name }}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="py-3 w-100">
+                {{> local_parrot_social/components/myfriends }}
+            </div>
+            <div class="w-100">
+                {{> local_parrot_social/components/media }}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="mb-4 pb-1"></div>
+<div class="card mt-3 mb-3 w-100">
+    <div class="card-header d-flex align-items-center justify-content-between">
+        <h3 class="mr-auto">
+            {{#str}} friends, local_parrot_social {{/str}}
+        </h3>
+        <button class="btn btn-primary" type="button" id="seeMoreBtn" onclick="see_more()" style="display:none">
+            <span id='seeMoreSpan'>
+                {{#str}} click_to_see_more, local_parrot_social {{/str}}
+            </span>
+            <span id='seeLessSpan'>
+                {{#str}} click_to_see_less, local_parrot_social {{/str}}
+            </span>
+        </button>
+    </div>
+    <div class="card-body p-1 media-updatable {{^parrots}} d-none {{/parrots}} position-relative">
+        <div class="w-100 d-flex flex-wrap" style="max-height: 170px; overflow:auto">
+            {{#parrots}}
+            {{#name}}
+            <div class="text-left py-2 px-1 friend">
+                <div class="d-flex w-100 text-decoration-none">
+                    <a class="" href="/local/parrot_social/pages/parrot_profile.php?parrot_id={{parrot_id}}"
+                        style="--image-width: 100px">
+                        {{#picture}}
+                        <img class="rounded-circle parrot-image border" src="{{picture}}" alt="{{name}}}"
+                            style="object-fit: cover; width: var(--image-width,150px); height: var(--image-width, 150px);" />
+                        {{/picture}}
+                        {{^picture}}
+                        {{> local_parrot_social/components/default_parrot_photo }}
+                        {{/picture}}
+                        <h2 class="h5 pt- mw-100 text-center mx-auto"
+                            style="width: min-content; overflow-wrap: normal; word-break: normal;">
+                            {{name}}
+                        </h2>
+                    </a>
+                    <div class="gear order-2">
+                        {{< local_parrot_social/components/gear }}
+                        {{$id}}parrot-{{parrot_id}}{{/id}}
+                        {{$items}}
+                        <form method="post"
+                            action="\local\parrot_social\controllers\ParrotController.php?current_parrot={{parrot.parrot_id}}"
+                            class="mform" callback="friendshipCancelled">
+                            <input type="hidden" name="action" value="cancel_friendship">
+                            <input type="hidden" name="friend_id" value="{{parrot_id}}">
+                            <button id="{{parrot_id}}" type="submit"
+                                class="dropdown-item collapse show update cancel_friend" aria-expanded="true">
+                                {{#str}} cancel_friendship, local_parrot_social {{/str}}
+                            </button>
+                        </form>
+                        {{/items}}
+                        {{/ local_parrot_social/components/gear }}
+                    </div>
+                </div>
+            </div>
+            {{/name}}
+            {{/parrots}}
+        </div>
+    </div>
+</div>

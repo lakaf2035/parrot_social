@@ -1,0 +1,7 @@
+{{#picture_url}}
+<img class="rounded-circle parrot-image border" src="{{picture_url}}" alt="{{$alt}}{{/alt}}"
+    style="object-fit: cover; width: var(--image-width,150px); height: var(--image-width, 150px);" />
+{{/picture_url}}
+{{^picture_url}}
+{{> local_parrot_social/components/default_parrot_photo }}
+{{/picture_url}}

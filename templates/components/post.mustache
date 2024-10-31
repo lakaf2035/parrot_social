@@ -1,0 +1,134 @@
+<div class="post" id="accordion-{{id}}">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal-{{id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        {{#str}} confirm_post_delete, local_parrot_social {{/str}}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{{delete_form_html}}}
+                    <p>
+                        {{#str}} confirm_post_delete_message, local_parrot_social {{/str}}
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light border" data-dismiss="modal">
+                        {{#str}} confirm_post_delete_cancel, local_parrot_social {{/str}}
+                    </button>
+                    <button type="button" class="btn btn-danger"
+                        onclick="handle_submission(event.currentTarget.parentElement.previousElementSibling.children[0]); $(window.loader).show();">
+                        {{#str}} confirm_post_delete_yes, local_parrot_social {{/str}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3" data-parent="#accordion-{{id}}" style="max-width: 32rem;">
+        <div class="card-header d-flex align-items-center font-weight-bold">
+            <span class="mr-auto post-title">
+                {{title}}
+            </span>
+            {{< local_parrot_social/components/gear }}
+            {{$id}}post-{{id}}{{/id}}
+            {{$items}}
+            <button class="dropdown-item collapse show updatable-{{id}}" data-parent="#accordion-{{id}}"
+                onclick="navigator.clipboard.writeText('{{share_url}}')">
+                {{#str}} share_post, local_parrot_social {{/str}}
+            </button>
+            <button class="dropdown-item collapse show updatable-{{id}}" data-parent="#accordion-{{id}}"
+                data-toggle="collapse" data-target=".updatable-{{id}}" aria-expanded="true">
+                {{#str}} edit_post, local_parrot_social {{/str}}
+            </button>
+            <button class="dropdown-item collapse updatable-{{id}}" data-parent="#accordion-{{id}}"
+                data-toggle="collapse" data-target=".updatable-{{id}}" aria-expanded="true">
+                {{#str}} edit_post_cancel, local_parrot_social {{/str}}
+            </button>
+            <button class="dropdown-item text-danger collapse show updatable-{{id}}" data-parent="#accordion-{{id}}"
+                data-toggle="modal" data-target="#exampleModal-{{id}}">
+                {{#str}} edit_post_delete, local_parrot_social {{/str}}
+            </button>
+            {{/items}}
+            {{/ local_parrot_social/components/gear }}
+        </div>
+        <div class="card-body collapse show updatable-{{id}}" data-parent="#accordion-{{id}}">
+            <p class="card-text">
+                {{{text}}}
+            </p>
+        </div>
+        <div class="card-body collapse updatable-{{id}}" data-parent="#accordion-{{id}}">
+            {{{update_form_html}}}
+        </div>
+        <div class="card-footer">
+            <div class="d-flex align-items-center">
+                <div class="dropdown">
+                    <button class="btn parrot_select p-1 {{^was_liked}} no_like {{/was_liked}}" type="button"
+                        id="parrot_select" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <svg class="" width="24" height="24" xmlns="http://www.w3.org/2000/svg" version="1.1"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" x="0" y="0"
+                            viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve">
+                            <g>
+                                <circle cx="256" cy="256" r="256" fill="#f09390" data-original="#f09390" class="">
+                                </circle>
+                                <path fill="#ec6761"
+                                    d="M167.196 333.736 72.48 354.885l155.593 155.593A258.87 258.87 0 0 0 256 512c141.385 0 256-114.615 256-256 0-2.963-.069-5.911-.169-8.85L382.807 118.126z"
+                                    data-original="#ec6761"></path>
+                                <path fill="#333940"
+                                    d="M356.28 187.198c-16.515-12.407-33.759-14.161-40.717-14.484a195.466 195.466 0 0 0 1.093 41.862 195.363 195.363 0 0 0 7.888 34.558 103.378 103.378 0 0 0 31.52-16.158 103.178 103.178 0 0 0 20.962-21.233c-3.12-5.989-9.369-15.998-20.746-24.545z"
+                                    data-original="#333940"></path>
+                                <path fill="#555a65"
+                                    d="M411.81 181.679c-.734-10.101-4.446-39.899-29.183-63.733-15.472-14.906-32.333-20.893-41.23-23.362-6.819 8.405-17.138 23.452-22.495 44.712a114.905 114.905 0 0 0-3.338 33.417c9.856 2.398 29.02 8.46 47.495 24.586 20.159 17.595 28.758 37.796 32.165 47.443 4.932-7.502 18.922-30.901 16.586-63.063z"
+                                    data-original="#555a65"></path>
+                                <path fill="#fcc74c"
+                                    d="M367.291 327.848c-6.329-45.238-35.015-71.949-42.746-78.714-18.333-4.857-41.311-8.288-67.355-5.98-93.725 8.304-150.085 84.074-161.798 100.576l247.096 79.132c5.353-7.119 31.942-43.985 24.803-95.014z"
+                                    data-original="#fcc74c"></path>
+                                <path fill="#b4cefb"
+                                    d="M116.767 195.332c-28.8 58.234-25.775 114.846-21.369 145.494l-.007 2.904 164.076-67.732 23.298-106.334-23.298-96.169c-66.587 8.358-119.586 75.102-142.7 121.837z"
+                                    data-original="#b4cefb" class=""></path>
+                                <path fill="#95baf9"
+                                    d="M341.396 94.585c-12.776-8.563-33.313-19.591-59.508-21.638a110.425 110.425 0 0 0-22.42.548v202.504l65.077-26.864 16.851-154.55z"
+                                    data-original="#95baf9"></path>
+                                <path fill="#ffffff"
+                                    d="M229.626 120.765c-2.811 15.258 7.556 32.74 26.069 43.539-1.398 1.284-27.761 26.128-21.631 51.676 2.79 11.628 12.067 22.343 25.403 29.407l21.255-75.723-21.254-77.504c-10.727 4.611-26.919 12.735-29.842 28.605z"
+                                    data-original="#ffffff"></path>
+                                <path fill="#e9edf5"
+                                    d="m324.544 249.134 16.852-154.549c-11.498-5.024-45.116-17.837-78.845-3.728-.958.401-1.993.834-3.083 1.303v153.227c16.833 8.916 40.137 12.013 65.076 3.747z"
+                                    data-original="#e9edf5"></path>
+                                <path fill="#95baf9"
+                                    d="M258.266 244.735c-31.318-15.302-75.904 5.513-103.31 27.512-5.5 4.415-6.067 5.465-25.379 25.313a3419.428 3419.428 0 0 1-57.097 57.326l186.988 44.295 15.128-79.852-15.128-73.969c-.399-.212-.795-.426-1.202-.625z"
+                                    data-original="#95baf9"></path>
+                                <path fill="#5c92f7"
+                                    d="M296.224 382.437c1.323-35.784 4.264-115.479-36.757-137.079V399.18l34.85 8.255c1.14-9.554 1.641-17.785 1.907-24.998z"
+                                    data-original="#5c92f7"></path>
+                            </g>
+                        </svg>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="parrot_select">
+                        {{#viewer_parrots}}
+                        <div class="d-none">
+                            {{{form_html}}}
+                        </div>
+                        <button class="dropdown-item" type="button"
+                            onclick="handle_submission(event.currentTarget.previousElementSibling.children[0]); $(window.loader).show();">
+                            {{name}}
+                        </button>
+                        {{/viewer_parrots}}
+                    </div>
+                </div>
+                <span class="ml-2">
+                    <b>
+                        {{#was_liked}}
+                        {{likes_count}}
+                        {{/was_liked}}
+                    </b>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
